@@ -10,7 +10,7 @@ public class TareaProg {
 }
 
 class OrdenCompra{
-    private Date fecha;
+    private Date fecha_compra;
     private String estado;
     
     public OrdenDeCompra(){}
