@@ -1,5 +1,7 @@
 package tareaprog;
 
+import java.util.Date;
+
 public class TareaProg {
 
     public static void main(String[] args) {
@@ -10,7 +12,7 @@ public class TareaProg {
 }
 
 class OrdenCompra{
-    private Date fecha_compra;
+    private Date fecha;
     private String estado;
     
     public OrdenDeCompra(){}
