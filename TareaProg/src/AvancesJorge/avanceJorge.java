@@ -7,17 +7,23 @@ public class avanceJorge {
      public static void main(String[] args) {
         Date a = new Date(2002,06, 05);
         Date b = new Date(2022,10, 05);
+        
         //DetalleOrden c= new DetalleOrden(5);
-        ArrayList<Articulo> articulo = new ArrayList<Articulo>(5);
+        ArrayList<Articulo> articulo = new ArrayList<Articulo>(3);
         articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
         articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
         articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
-        articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
-        articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
+        
+        ArrayList<Articulo> articulo2 = new ArrayList<Articulo>(2);
+        articulo2.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
+        articulo2.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
+        
         //Preguntar por fecha, estado y como funciona DetalleOrden + articulo.
-        DetalleOrden d= new DetalleOrden(6, articulo);
-        OrdenCompra lista = new OrdenCompra(a,"Hola",d); 
+        DetalleOrden d= new DetalleOrden(3, articulo);
+        DetalleOrden c= new DetalleOrden(2, articulo2);
+        OrdenCompra lista = new OrdenCompra(a,"Hola",c); 
         OrdenCompra lista2=new OrdenCompra(b, "Chao", d);
+        
         Cliente Jorge= new Cliente("Jorge", "21087983-8", new Direccion("Las Palmeras 602"));
         Cliente Dani= new Cliente("Dani", "21289833-3", new Direccion("Fragata María Isabel 165-b"));
         Efectivo dinero1 =new Efectivo(5.7f, a, lista);
@@ -29,14 +35,14 @@ public class avanceJorge {
         System.out.println("Precio con IVA: "+ lista.calcPrecio());
         System.out.println("IVA total: "+ lista.calcIVA());
         System.out.println("Peso total: "+ lista.calcPeso());
-        System.out.println("Devolucion"+dinero1.calcDevolucion());
+        System.out.println("Devolucion: "+dinero1.calcDevolucion());
         
         
         System.out.println("ORDEN 2:"+"\n"+"Precio sin IVA: "+ lista2.calcPrecioSinIVA());
         System.out.println("Precio con IVA: "+ lista2.calcPrecio());
         System.out.println("IVA total: "+ lista2.calcIVA());
         System.out.println("Peso total: "+ lista2.calcPeso());
-        System.out.println("Devolucion"+dinero15.calcDevolucion());
+        System.out.println("Devolucion: "+dinero15.calcDevolucion());
         
     }
     
@@ -80,8 +86,7 @@ class OrdenCompra{
     
     public float calcPrecio(){
         return detOrden.calcPrecio();
-    }
-    
+    }   
     public float calcPeso(){
         return detOrden.calcPeso();
     }
