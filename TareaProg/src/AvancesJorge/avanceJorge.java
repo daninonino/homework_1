@@ -20,10 +20,12 @@ public class avanceJorge {
 class Cliente{
     private String nombre;
     private String rut;
-    
-    public Cliente(String a, String b){
+    public Direccion direccion;
+    public OrdenCompra ordenCompra[];
+    public Cliente(String a, String b, Direccion d){
         nombre=a;
         rut=b;
+        direccion = d;
     
     }
 
@@ -32,6 +34,7 @@ class Cliente{
 class OrdenCompra{
     private Date fecha;
     private String estado;
+    private Cliente cliente;
     
     public OrdenCompra(Date a, String b){
         fecha=a;
@@ -80,13 +83,18 @@ class Articulo{
 
 class Direccion{
     private String direccion;
-
+    private Cliente cliente[];
+    private DocTributario docTributario[];
+    public Direccion(String dir){
+        direccion = dir;
+    }
 }
 
 class DocTributario{
    private String numero;
    private String rut;
    private Date fecha;
+   private Direccion direccion;
    
    public DocTributario(String a, String b, Date c){
        numero=a;
