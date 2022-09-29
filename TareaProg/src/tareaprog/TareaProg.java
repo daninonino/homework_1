@@ -1,4 +1,4 @@
-package tareaprog;
+/*package tareaprog;
 
 public class TareaProg {
 
@@ -40,3 +40,4 @@ class Articulo{
     public Articulo(){}
 
 }
+*/

@@ -1,0 +1,13 @@
+AvancesJorge.Factura
+AvancesJorge.Boleta
+AvancesJorge.Efectivo
+AvancesJorge.Articulo
+AvancesJorge.OrdenCompra
+AvancesJorge.Direccion
+AvancesJorge.Pago
+AvancesJorge.Cliente
+AvancesJorge.DetalleOrden
+AvancesJorge.Tarjeta
+AvancesJorge.avanceJorge
+AvancesJorge.Transferencia
+AvancesJorge.DocTributario
