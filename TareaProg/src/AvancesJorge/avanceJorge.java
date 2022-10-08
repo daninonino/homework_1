@@ -9,9 +9,9 @@ public class avanceJorge {
         Date b = new Date(2022,10, 05);
         
         ArrayList<Articulo> articulo = new ArrayList<Articulo>(3);
-        articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
-        articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
-        articulo.add(new Articulo(1.50f,"Papas Lays","Papas fritas corte Americano",1.500f));
+        articulo.add(new Articulo(3.50f,"Papas Lays","Papas fritas corte Americano",15.95f));
+        articulo.add(new Articulo(3.00f,"Palmitos Esmeralda","Palmitos en conserva",19.00f));
+        articulo.add(new Articulo(2.50f,"RedBull SugarFree","Bebida energetica sin azucar añadida",15.99f));
            
         DetalleOrden d = new DetalleOrden(3);
         d.setArticulo(articulo.get(0));
@@ -20,41 +20,52 @@ public class avanceJorge {
         DetalleOrden c = new DetalleOrden(2);
         c.setArticulo(articulo.get(1));
         c.setArticulo(articulo.get(0));
+        DetalleOrden e = new DetalleOrden(2);
+        e.setArticulo(articulo.get(0));
+        e.setArticulo(articulo.get(2));
         OrdenCompra lista = new OrdenCompra(a,"pago efectuado"); 
-        OrdenCompra lista2=new OrdenCompra(b, "pago pendiente");
+        OrdenCompra lista2 = new OrdenCompra(b, "pago pendiente");
+        OrdenCompra lista3 = new OrdenCompra(a, "pago pendiente");
         lista.setOrden(d);
         lista2.setOrden(c);
+        lista3.setOrden(e);
         
         Cliente Jorge= new Cliente("Jorge", "21087983-8", new Direccion("Las Palmeras 602"));
         Cliente Dani= new Cliente("Dani", "21289833-3", new Direccion("Fragata María Isabel 165-b"));
-        lista.setCliente(Dani);
+        lista.setCliente(Jorge);
         lista2.setCliente(Jorge);
+        lista3.setCliente(Dani);
         
-        Pago dinero1 = new Efectivo(1.4f, a);
-        Pago dinero15= new Efectivo(5.7f, b);
-        Pago dinero2 = new Transferencia(5.7f, a, "Banco Falabella", "12345678");
-        Pago dinero3 = new Tarjeta(5.7f, a, "debito", "12345678");
+        Pago dinero1 = new Efectivo(24.0f, a);
+        Pago dinero15= new Efectivo(35.94f, b);
+        Pago dinero2 = new Transferencia(13.7f, a, "Banco Falabella", "12345678");
+        Pago dinero3 = new Tarjeta(10.7f, a, "debito", "12345678");
         lista.addPago(dinero1);
         lista.addPago(dinero15);
         lista2.addPago(dinero2);
-        lista2.addPago(dinero3);
+        lista3.addPago(dinero3);
         dinero1.setOrdenCompra(lista);
         dinero15.setOrdenCompra(lista);
         dinero2.setOrdenCompra(lista2);
-        dinero3.setOrdenCompra(lista2);
+        dinero3.setOrdenCompra(lista3);
         
         System.out.println("ORDEN 1:"+"\n"+"Precio sin IVA: "+ lista.calcPrecioSinIVA());
         System.out.println("Precio con IVA: "+ lista.calcPrecio());
         System.out.println("IVA total: "+ lista.calcIVA());
         System.out.println("Peso total: "+ lista.calcPeso());
-        System.out.println("Devolucion: "+((Efectivo)lista.Pagos.get(0)).calcDevolucion());
+        System.out.println("Devolucion 1: "+((Efectivo)lista.Pagos.get(0)).calcDevolucion());
+        System.out.println("Devolucion 2: "+((Efectivo)lista.Pagos.get(1)).calcDevolucion());
         
         
         System.out.println("ORDEN 2:"+"\n"+"Precio sin IVA: "+ lista2.calcPrecioSinIVA());
         System.out.println("Precio con IVA: "+ lista2.calcPrecio());
         System.out.println("IVA total: "+ lista2.calcIVA());
         System.out.println("Peso total: "+ lista2.calcPeso());
-        
+    
+        System.out.println("ORDEN 3:"+"\n"+"Precio sin IVA: "+ lista3.calcPrecioSinIVA());
+        System.out.println("Precio con IVA: "+ lista3.calcPrecio());
+        System.out.println("IVA total: "+ lista3.calcIVA());
+        System.out.println("Peso total: "+ lista3.calcPeso());
     }
     
 }
@@ -140,7 +151,7 @@ class DetalleOrden{
     }
     
     public void setArticulo(Articulo a){
-        this.list=a;
+        this.list = a;
     }
     public Articulo getArticulo(){
         return list;
@@ -281,7 +292,12 @@ class Efectivo extends Pago{
     }
     
     public float calcDevolucion(){
-       float devolucion=getMonto()- getOrdCompra().calcPrecio(); 
+       float devolucion = - getOrdCompra().calcPrecio(); 
+       int i = 0;
+       while{
+           devolucion += getOrdCompra().Pagos.get(i).getMonto();
+           if(getOrdCompra().Pagos.get(i).getMonto()==getMonto());
+       }
        if(devolucion < 0) devolucion = 0;
        return devolucion;
     }
