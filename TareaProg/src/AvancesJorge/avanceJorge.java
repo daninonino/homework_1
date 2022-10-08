@@ -32,8 +32,12 @@ public class avanceJorge {
         lista2.setOrden(g);
         lista3.setOrden(f);
         
-        Cliente Jorge= new Cliente("Jorge", "21087983-8", new Direccion("Las Palmeras 602"));
-        Cliente Dani= new Cliente("Dani", "21289833-3", new Direccion("Fragata María Isabel 165-b"));
+        Direccion CasaJ =  new Direccion("Las Palmeras 602");
+        Direccion CasaD =  new Direccion("Fragata María Isabel 165-b");
+        Cliente Jorge= new Cliente("Jorge", "21087983-8", CasaJ);
+        Cliente Dani= new Cliente("Dani", "21289833-3", CasaD);
+        CasaJ.setCliente(Jorge);
+        CasaD.setCliente(Dani);
         lista.setCliente(Jorge);
         lista2.setCliente(Jorge);
         lista3.setCliente(Dani);
@@ -52,6 +56,7 @@ public class avanceJorge {
         dinero3.setOrdenCompra(lista3);
         
         System.out.println("ORDEN 1:"+"\n"+"Precio sin IVA: "+ lista.calcPrecioSinIVA());
+        System.out.println("Cliente: " + lista.toString());
         System.out.println("Precio con IVA: "+ lista.calcPrecio());
         System.out.println("IVA total: "+ lista.calcIVA());
         System.out.println("Peso total: "+ lista.calcPeso());
@@ -80,7 +85,12 @@ class Cliente{
         nombre=a;
         rut=b;
         direccion = d;
-    
+    }
+    public String getNombre(){
+        return nombre;
+    }
+    public String getRUT(){
+        return rut;
     }
 }
 
@@ -141,6 +151,9 @@ class OrdenCompra{
              pW+=detOrden.get(i).calcPeso();
         }
         return pW;
+    }
+    public String toString(){
+        return cliente.getNombre() + " RUT: " + cliente.getRUT() ;
     }
 }
 
@@ -214,14 +227,18 @@ class Articulo{
 
 class Direccion{
     private String direccion;
-    private Cliente cliente[];
+    private ArrayList<Cliente> cliente;
     private DocTributario docTributario[];
     public Direccion(String dir){
         direccion = dir;
+        cliente = new ArrayList<Cliente>();
     }
     
     public String getDireccion(){
         return direccion;
+    }
+    public void setCliente(Cliente c){
+        cliente.add(c);
     }
 }
 
