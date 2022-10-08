@@ -5,14 +5,17 @@ import java.util.Date;
 
 public class avanceJorge {
      public static void main(String[] args) {
+         //fechas
         Date a = new Date(2002,06, 05);
         Date b = new Date(2022,10, 05);
         
+        //Agregamos Articulos
         ArrayList<Articulo> articulo = new ArrayList<Articulo>(3);
         articulo.add(new Articulo(3.50f,"Papas Lays","Papas fritas corte Americano",15.95f));
         articulo.add(new Articulo(3.00f,"Palmitos Esmeralda","Palmitos en conserva",30.00f));
         articulo.add(new Articulo(2.50f,"RedBull SugarFree","Bebida energetica sin azucar añadida",18.99f));
-           
+        
+        //Agregamos la cantidad de Articulos por cada Orden   
         DetalleOrden d = new DetalleOrden(3);
         d.setArticulo(articulo.get(1));
         DetalleOrden c = new DetalleOrden(2);
@@ -23,24 +26,36 @@ public class avanceJorge {
         f.setArticulo(articulo.get(2));
         DetalleOrden g = new DetalleOrden(3);
         g.setArticulo(articulo.get(1));
+        
+        //Creamos las ordenes de listas
         OrdenCompra lista = new OrdenCompra(a,"pago efectuado"); 
         OrdenCompra lista2 = new OrdenCompra(b, "pago pendiente");
         OrdenCompra lista3 = new OrdenCompra(a, "pago pendiente");
+        
+        //Agregamos los articulos a las ordenes de compra
         lista.setOrden(d);
         lista2.setOrden(c);
         lista3.setOrden(e);
         lista2.setOrden(g);
         lista3.setOrden(f);
         
+        //Creamos las direcciones de casas
         Direccion CasaJ =  new Direccion("Las Palmeras 602");
         Direccion CasaD =  new Direccion("Fragata María Isabel 165-b");
+        
+        //Creamos los clientes
         Cliente Jorge= new Cliente("Jorge", "21087983-8", CasaJ);
         Cliente Dani= new Cliente("Dani", "21289833-3", CasaD);
+        
+        //Vinculamos a los clientes con las direcciones
         CasaJ.setCliente(Jorge);
         CasaD.setCliente(Dani);
+        
+        //Vinculamos a los clientes con ordenes de compras
         lista.setCliente(Jorge);
         lista2.setCliente(Jorge);
         lista3.setCliente(Dani);
+        
         
         Pago dinero1 = new Efectivo(50.0f, a);
         Pago dinero15= new Efectivo(60.94f, b);
@@ -55,21 +70,32 @@ public class avanceJorge {
         dinero2.setOrdenCompra(lista2);
         dinero3.setOrdenCompra(lista3);
         
-        System.out.println("ORDEN 1:"+"\n"+"Precio sin IVA: "+ lista.calcPrecioSinIVA());
+        System.out.println("ORDEN 1:");
         System.out.println("Cliente: " + lista.toString());
+        System.out.println(CasaJ.toString());
+        System.out.println("Precio sin IVA: "+ lista.calcPrecioSinIVA());
         System.out.println("Precio con IVA: "+ lista.calcPrecio());
         System.out.println("IVA total: "+ lista.calcIVA());
         System.out.println("Peso total: "+ lista.calcPeso());
+        System.out.println(dinero1.toString());
         System.out.println("Devolucion 1: "+((Efectivo)lista.Pagos.get(0)).calcDevolucion());
+        System.out.println(dinero15.toString());
         System.out.println("Devolucion 2: "+((Efectivo)lista.Pagos.get(1)).calcDevolucion());
         
-        
-        System.out.println("ORDEN 2:"+"\n"+"Precio sin IVA: "+ lista2.calcPrecioSinIVA());
+        System.out.println("\nORDEN 2:");
+        System.out.println("Cliente: " + lista2.toString());
+        System.out.println(CasaJ.toString());
+        System.out.println(dinero2.toString());
+        System.out.println("Precio sin IVA: "+ lista2.calcPrecioSinIVA());      
         System.out.println("Precio con IVA: "+ lista2.calcPrecio());
         System.out.println("IVA total: "+ lista2.calcIVA());
         System.out.println("Peso total: "+ lista2.calcPeso());
     
-        System.out.println("ORDEN 3:"+"\n"+"Precio sin IVA: "+ lista3.calcPrecioSinIVA());
+        System.out.println("\nORDEN 3:");      
+        System.out.println("Cliente: " +lista3.toString());
+        System.out.println(CasaD.toString());
+        System.out.println(dinero3.toString());
+        System.out.println("Precio sin IVA: "+ lista3.calcPrecioSinIVA());
         System.out.println("Precio con IVA: "+ lista3.calcPrecio());
         System.out.println("IVA total: "+ lista3.calcIVA());
         System.out.println("Peso total: "+ lista3.calcPeso());
@@ -91,6 +117,9 @@ class Cliente{
     }
     public String getRUT(){
         return rut;
+    }
+    public String toString(){
+        return nombre + "\n" + "RUT: " + rut +"\n"+direccion ;
     }
 }
 
@@ -143,7 +172,7 @@ class OrdenCompra{
         for(int i=0; i<detOrden.size();i++){
             p += detOrden.get(i).calcPrecio();
         }
-        return p;
+         return p;
     }   
     public float calcPeso(){
         float pW=0;
@@ -152,8 +181,9 @@ class OrdenCompra{
         }
         return pW;
     }
+    
     public String toString(){
-        return cliente.getNombre() + " RUT: " + cliente.getRUT() ;
+        return cliente.getNombre() +"\n" +"RUT: " + cliente.getRUT() ;
     }
 }
 
@@ -228,7 +258,6 @@ class Articulo{
 class Direccion{
     private String direccion;
     private ArrayList<Cliente> cliente;
-    private DocTributario docTributario[];
     public Direccion(String dir){
         direccion = dir;
         cliente = new ArrayList<Cliente>();
@@ -240,6 +269,12 @@ class Direccion{
     public void setCliente(Cliente c){
         cliente.add(c);
     }
+    
+    public String toString(){
+        return "Direccion: " + direccion;
+    
+    }
+    
 }
 
 class DocTributario{
@@ -247,11 +282,22 @@ class DocTributario{
    private String rut;
    private Date fecha;
    private Direccion direccion;
+   private ArrayList<DocTributario> docTributario;
    
    public DocTributario(String a, String b, Date c){
        numero=a;
        rut=b;
        fecha=c;
+   
+   }
+   
+   public String getNumero(){
+       return numero;
+   
+   }
+   
+   public String getRUT(){
+       return rut;
    
    }
    
@@ -263,7 +309,7 @@ class Boleta extends DocTributario{
     
     }
     public String DocTributario(){
-        return "boleta";
+        return "Boleta: "+getNumero()+"\n"+"RUT: "+getRUT();
     }
 
 }
@@ -274,7 +320,7 @@ class Factura extends DocTributario{
     
     }
         public String DocTributario(){
-        return "Factura";
+        return "Factura: "+getNumero()+"\n"+"RUT: "+getRUT();
     }
 
 }
@@ -321,6 +367,11 @@ class Efectivo extends Pago{
        if(devolucion < 0) devolucion = 0;
        return devolucion;
     }
+    
+    public String toString(){
+        return "Saldo: " + getMonto();
+    
+    }
 
 }
 
@@ -334,6 +385,11 @@ class Transferencia extends Pago{
         numCuenta=f;
     
     }
+    
+    public String toString(){
+        return "Banco: "+banco+"\n"+"Numero de Cuenta: "+numCuenta;
+    
+    }
 
 }
 
@@ -345,6 +401,11 @@ class Tarjeta extends Pago{
         super(a, b);
         tipo=d;
         numTransaccion=e;
+    }
+    
+    public String toString(){
+        return "Tipo de Tarjeta: " + tipo +"\n"+ "Numero de Transaccion: " + numTransaccion;
+    
     }
 
 }
