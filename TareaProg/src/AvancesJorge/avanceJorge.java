@@ -10,25 +10,27 @@ public class avanceJorge {
         
         ArrayList<Articulo> articulo = new ArrayList<Articulo>(3);
         articulo.add(new Articulo(3.50f,"Papas Lays","Papas fritas corte Americano",15.95f));
-        articulo.add(new Articulo(3.00f,"Palmitos Esmeralda","Palmitos en conserva",19.00f));
-        articulo.add(new Articulo(2.50f,"RedBull SugarFree","Bebida energetica sin azucar añadida",15.99f));
+        articulo.add(new Articulo(3.00f,"Palmitos Esmeralda","Palmitos en conserva",30.00f));
+        articulo.add(new Articulo(2.50f,"RedBull SugarFree","Bebida energetica sin azucar añadida",18.99f));
            
         DetalleOrden d = new DetalleOrden(3);
-        d.setArticulo(articulo.get(0));
-        d.setArticulo(articulo.get(2));
         d.setArticulo(articulo.get(1));
         DetalleOrden c = new DetalleOrden(2);
-        c.setArticulo(articulo.get(1));
         c.setArticulo(articulo.get(0));
         DetalleOrden e = new DetalleOrden(2);
         e.setArticulo(articulo.get(0));
-        e.setArticulo(articulo.get(2));
+        DetalleOrden f = new DetalleOrden(5);
+        f.setArticulo(articulo.get(2));
+        DetalleOrden g = new DetalleOrden(3);
+        g.setArticulo(articulo.get(1));
         OrdenCompra lista = new OrdenCompra(a,"pago efectuado"); 
         OrdenCompra lista2 = new OrdenCompra(b, "pago pendiente");
         OrdenCompra lista3 = new OrdenCompra(a, "pago pendiente");
         lista.setOrden(d);
         lista2.setOrden(c);
         lista3.setOrden(e);
+        lista2.setOrden(g);
+        lista3.setOrden(f);
         
         Cliente Jorge= new Cliente("Jorge", "21087983-8", new Direccion("Las Palmeras 602"));
         Cliente Dani= new Cliente("Dani", "21289833-3", new Direccion("Fragata María Isabel 165-b"));
@@ -36,10 +38,10 @@ public class avanceJorge {
         lista2.setCliente(Jorge);
         lista3.setCliente(Dani);
         
-        Pago dinero1 = new Efectivo(24.0f, a);
-        Pago dinero15= new Efectivo(35.94f, b);
-        Pago dinero2 = new Transferencia(13.7f, a, "Banco Falabella", "12345678");
-        Pago dinero3 = new Tarjeta(10.7f, a, "debito", "12345678");
+        Pago dinero1 = new Efectivo(50.0f, a);
+        Pago dinero15= new Efectivo(60.94f, b);
+        Pago dinero2 = new Transferencia(146.6f, a, "Banco Falabella", "12345678");
+        Pago dinero3 = new Tarjeta(151.7f, a, "debito", "12345678");
         lista.addPago(dinero1);
         lista.addPago(dinero15);
         lista2.addPago(dinero2);
@@ -294,9 +296,10 @@ class Efectivo extends Pago{
     public float calcDevolucion(){
        float devolucion = - getOrdCompra().calcPrecio(); 
        int i = 0;
-       while{
+       while(true){
            devolucion += getOrdCompra().Pagos.get(i).getMonto();
-           if(getOrdCompra().Pagos.get(i).getMonto()==getMonto());
+           if(Math.abs(getOrdCompra().Pagos.get(i).getMonto()-getMonto())<=0.000001) break;
+           else i++;
        }
        if(devolucion < 0) devolucion = 0;
        return devolucion;
