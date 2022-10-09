@@ -2,6 +2,7 @@ package AvancesJorge;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.SimpleDateFormat;  //Ocupamos esta libreria para establecer un formato a la fecha
 
 public class avanceJorge {
      public static void main(String[] args) {
@@ -151,6 +152,11 @@ class OrdenCompra{
         Pagos.add(a);
     }
     
+    public Date getFecha(){
+        return fecha;
+    
+    }
+    
     public float calcPrecioSinIVA(){
         float pSinIVA = 0;
         for (int i = 0; i < detOrden.size();i++){
@@ -182,8 +188,10 @@ class OrdenCompra{
         return pW;
     }
     
-    public String toString(){
-        return cliente.getNombre() +"\n" +"RUT: " + cliente.getRUT() ;
+    public String toString(){ 
+        SimpleDateFormat timeFormat= new SimpleDateFormat("dd/mm/yy"); 
+        SimpleDateFormat timeFormat2= new SimpleDateFormat("hh:mm:ss"); 
+        return cliente.getNombre() +"\n" +"RUT: " + cliente.getRUT()+"\nFecha: "+timeFormat.format(fecha)+" "+timeFormat2.format(fecha);
     }
 }
 
@@ -298,6 +306,10 @@ class DocTributario{
    
    public String getRUT(){
        return rut;
+   
+   }
+   public Date getFecha(){
+       return fecha;
    
    }
    
