@@ -3,12 +3,10 @@ package AvancesJorge;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;  //Ocupamos esta libreria para establecer un formato a la fecha
+import java.util.Calendar;          //Ocupamos esta libreria para obtener la fecha actual del calendario
 
 public class avanceJorge {
      public static void main(String[] args) {
-         //fechas
-        Date a = new Date(2002,06, 05);
-        Date b = new Date(2022,10, 05);
         
         //Agregamos Articulos
         ArrayList<Articulo> articulo = new ArrayList<Articulo>(3);
@@ -29,9 +27,9 @@ public class avanceJorge {
         g.setArticulo(articulo.get(1));
         
         //Creamos las ordenes de listas
-        OrdenCompra lista = new OrdenCompra(a,"pago efectuado"); 
-        OrdenCompra lista2 = new OrdenCompra(b, "pago pendiente");
-        OrdenCompra lista3 = new OrdenCompra(a, "pago pendiente");
+        OrdenCompra lista = new OrdenCompra("pago efectuado"); 
+        OrdenCompra lista2 = new OrdenCompra( "pago pendiente");
+        OrdenCompra lista3 = new OrdenCompra( "pago pendiente");
         
         //Agregamos los articulos a las ordenes de compra
         lista.setOrden(d);
@@ -58,10 +56,10 @@ public class avanceJorge {
         lista3.setCliente(Dani);
         
         
-        Pago dinero1 = new Efectivo(50.0f, a);
-        Pago dinero15= new Efectivo(60.94f, b);
-        Pago dinero2 = new Transferencia(146.6f, a, "Banco Falabella", "12345678");
-        Pago dinero3 = new Tarjeta(151.7f, a, "debito", "12345678");
+        Pago dinero1 = new Efectivo(50.0f);
+        Pago dinero15= new Efectivo(60.94f);
+        Pago dinero2 = new Transferencia(146.6f, "Banco Falabella", "12345678");
+        Pago dinero3 = new Tarjeta(151.7f, "debito", "12345678");
         lista.addPago(dinero1);
         lista.addPago(dinero15);
         lista2.addPago(dinero2);
@@ -70,6 +68,14 @@ public class avanceJorge {
         dinero15.setOrdenCompra(lista);
         dinero2.setOrdenCompra(lista2);
         dinero3.setOrdenCompra(lista3);
+        
+        //fechas
+        Date a = new Date(Calendar.getInstance().getTimeInMillis());
+        Date b = new Date(122,9,9,23,59,59);
+        
+        lista.setFecha(a);
+        lista2.setFecha(b);
+        lista3.setFecha(a);
         
         System.out.println("ORDEN 1:");
         System.out.println("Cliente: " + lista.toString());
@@ -131,14 +137,16 @@ class OrdenCompra{
     public ArrayList<DetalleOrden> detOrden;
     public ArrayList<Pago> Pagos;
     
-    public OrdenCompra(Date a, String b){
-        fecha = a;
+    public OrdenCompra(String b){
         estado = b;
         detOrden = new ArrayList<DetalleOrden>() ;
         Pagos= new ArrayList<Pago>();
     }
     public void setOrden(DetalleOrden a){
         detOrden.add(a);
+    }
+    public void setFecha (Date d){
+        this.fecha = d;
     }
     
     public void setCliente(Cliente x){
@@ -189,7 +197,7 @@ class OrdenCompra{
     }
     
     public String toString(){ 
-        SimpleDateFormat timeFormat= new SimpleDateFormat("dd/mm/yy"); 
+        SimpleDateFormat timeFormat= new SimpleDateFormat("dd/MM/yy"); 
         SimpleDateFormat timeFormat2= new SimpleDateFormat("hh:mm:ss"); 
         return cliente.getNombre() +"\n" +"RUT: " + cliente.getRUT()+"\nFecha: "+timeFormat.format(fecha)+" "+timeFormat2.format(fecha);
     }
@@ -342,10 +350,12 @@ class Pago{
     private Date fecha;
     private OrdenCompra ordCompra;
     
-    public Pago(float a, Date b){
+    public Pago(float a){
         monto=a;
-        fecha=b;
+    }
     
+    public void setFecha (Date d){
+        this.fecha = d;
     }
     public void setOrdenCompra(OrdenCompra a){
         this.ordCompra=a;
@@ -363,8 +373,8 @@ class Pago{
 }
 
 class Efectivo extends Pago{
-    public Efectivo(float a, Date b){
-        super(a, b);
+    public Efectivo(float a){
+        super(a);
     
     }
     
@@ -381,7 +391,7 @@ class Efectivo extends Pago{
     }
     
     public String toString(){
-        return "Saldo: " + getMonto();
+        return "Efectivo: "+'\n'+"Saldo: " + getMonto();
     
     }
 
@@ -391,15 +401,15 @@ class Transferencia extends Pago{
     private String banco;
     private String numCuenta;
     
-    public Transferencia(float a, Date b, String e, String f){
-        super(a, b);
+    public Transferencia(float a, String e, String f){
+        super(a);
         banco=e;
         numCuenta=f;
     
     }
     
     public String toString(){
-        return "Banco: "+banco+"\n"+"Numero de Cuenta: "+numCuenta;
+        return "Banco: "+banco+"\n"+"Numero de Cuenta: "+numCuenta+"\n"+"Saldo: "+ getMonto();
     
     }
 
@@ -409,14 +419,14 @@ class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
     
-    public Tarjeta(float a, Date b, String d, String e){
-        super(a, b);
+    public Tarjeta(float a, String d, String e){
+        super(a);
         tipo=d;
         numTransaccion=e;
     }
     
     public String toString(){
-        return "Tipo de Tarjeta: " + tipo +"\n"+ "Numero de Transaccion: " + numTransaccion;
+        return "Tipo de Tarjeta: " + tipo +"\n"+ "Numero de Transaccion: " + numTransaccion+"\n"+"Saldo: "+ getMonto();
     
     }
 
